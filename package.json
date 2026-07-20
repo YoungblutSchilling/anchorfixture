@@ -1,0 +1,53 @@
+{
+  "name": "anchorfixture",
+  "version": "0.1.0",
+  "description": "Deterministic frontend and agent test fixtures generated from Anchor IDLs.",
+  "type": "module",
+  "bin": {
+    "anchorfixture": "dist-cli/cli.js"
+  },
+  "files": [
+    "dist-cli",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "npm run build:cli && npm run build:web",
+    "build:cli": "tsc -p tsconfig.cli.json",
+    "build:web": "tsc -p tsconfig.app.json --noEmit && vite build",
+    "check": "tsc -p tsconfig.app.json --noEmit && tsc -p tsconfig.cli.json --noEmit",
+    "dev": "vite",
+    "fixture": "tsx src/cli.ts",
+    "prepack": "npm run build:cli",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
+  },
+  "license": "MIT",
+  "homepage": "https://youngblutschilling.github.io/anchorfixture/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YoungblutSchilling/anchorfixture.git"
+  },
+  "bugs": {
+    "url": "https://github.com/YoungblutSchilling/anchorfixture/issues"
+  },
+  "dependencies": {
+    "lucide-react": "^0.468.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@types/react": "18.3.12",
+    "@types/react-dom": "18.3.1",
+    "@vitejs/plugin-react": "^6.0.3",
+    "ajv": "^8.17.1",
+    "tsx": "^4.20.0",
+    "typescript": "^5.8.0",
+    "vite": "^8.1.5",
+    "vitest": "^3.2.0"
+  }
+}
