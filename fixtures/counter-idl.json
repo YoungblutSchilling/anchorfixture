@@ -1,0 +1,69 @@
+{
+  "address": "4Nd1m6wL85GkCjs1jKFYwGkCfAGt3VsFjQeR2ZdQXqQx",
+  "metadata": {
+    "name": "fixture_counter",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "A compact Anchor 0.30 IDL used to demonstrate deterministic fixture generation."
+  },
+  "instructions": [
+    {
+      "name": "initialize",
+      "discriminator": [175, 175, 109, 31, 13, 152, 155, 237],
+      "accounts": [
+        {
+          "name": "counter",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              { "kind": "const", "value": [99, 111, 117, 110, 116, 101, 114] },
+              { "kind": "account", "path": "authority" }
+            ]
+          }
+        },
+        { "name": "authority", "writable": true, "signer": true },
+        { "name": "systemProgram", "address": "11111111111111111111111111111111" }
+      ],
+      "args": [
+        { "name": "start", "type": "u64" },
+        { "name": "label", "type": "string" }
+      ]
+    },
+    {
+      "name": "increment",
+      "discriminator": [11, 18, 104, 9, 104, 174, 59, 33],
+      "accounts": [
+        { "name": "counter", "writable": true },
+        { "name": "authority", "signer": true }
+      ],
+      "args": [
+        { "name": "amount", "type": "u16" }
+      ]
+    },
+    {
+      "name": "setConfig",
+      "discriminator": [108, 158, 154, 175, 212, 98, 52, 66],
+      "accounts": [
+        { "name": "counter", "writable": true },
+        { "name": "authority", "signer": true }
+      ],
+      "args": [
+        { "name": "config", "type": { "defined": { "name": "CounterConfig" } } },
+        { "name": "delegate", "type": { "option": "pubkey" } }
+      ]
+    }
+  ],
+  "types": [
+    {
+      "name": "CounterConfig",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          { "name": "ceiling", "type": "u64" },
+          { "name": "enabled", "type": "bool" },
+          { "name": "tags", "type": { "vec": "string" } }
+        ]
+      }
+    }
+  ]
+}
