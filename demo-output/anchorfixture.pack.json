@@ -1,0 +1,705 @@
+{
+  "schema": "anchorfixture/v1",
+  "seed": "anchorfixture",
+  "idlFingerprint": "fnv1a32:7c4fc5e4",
+  "program": {
+    "name": "fixture_counter",
+    "address": "4Nd1m6wL85GkCjs1jKFYwGkCfAGt3VsFjQeR2ZdQXqQx",
+    "version": "0.1.0"
+  },
+  "summary": {
+    "instructions": 3,
+    "scenarios": 14,
+    "negativeScenarios": 8,
+    "signerAccounts": 1
+  },
+  "instructions": [
+    {
+      "instruction": "initialize",
+      "discriminator": [
+        175,
+        175,
+        109,
+        31,
+        13,
+        152,
+        155,
+        237
+      ],
+      "accountMatrix": [
+        {
+          "path": "counter",
+          "name": "counter",
+          "publicKey": "HWJCpd8AS2nZDQzBprkiMPxd25RE25ePiVv7nhbX6doj",
+          "signer": false,
+          "writable": true,
+          "source": "pda"
+        },
+        {
+          "path": "authority",
+          "name": "authority",
+          "publicKey": "5iozfG3sFzpYx9NBSxni9vxTu1gSoCueL8phaSrQzxYX",
+          "signer": true,
+          "writable": true,
+          "source": "generated"
+        },
+        {
+          "path": "systemProgram",
+          "name": "systemProgram",
+          "publicKey": "11111111111111111111111111111111",
+          "signer": false,
+          "writable": false,
+          "source": "fixed"
+        }
+      ],
+      "scenarios": [
+        {
+          "id": "initialize.success",
+          "instruction": "initialize",
+          "kind": "success",
+          "title": "Valid account and argument set",
+          "expectedOutcome": "pass",
+          "accounts": [
+            {
+              "path": "counter",
+              "name": "counter",
+              "publicKey": "HWJCpd8AS2nZDQzBprkiMPxd25RE25ePiVv7nhbX6doj",
+              "signer": false,
+              "writable": true,
+              "source": "pda"
+            },
+            {
+              "path": "authority",
+              "name": "authority",
+              "publicKey": "5iozfG3sFzpYx9NBSxni9vxTu1gSoCueL8phaSrQzxYX",
+              "signer": true,
+              "writable": true,
+              "source": "generated"
+            },
+            {
+              "path": "systemProgram",
+              "name": "systemProgram",
+              "publicKey": "11111111111111111111111111111111",
+              "signer": false,
+              "writable": false,
+              "source": "fixed"
+            }
+          ],
+          "args": {
+            "start": "1000000",
+            "label": "fixture-alpha"
+          },
+          "signers": [
+            "authority"
+          ],
+          "mutation": {
+            "type": "none",
+            "note": "IDL constraints are preserved."
+          }
+        },
+        {
+          "id": "initialize.missing-signer.authority",
+          "instruction": "initialize",
+          "kind": "negative",
+          "title": "Missing signature: authority",
+          "expectedOutcome": "reject",
+          "expectedError": "MISSING_REQUIRED_SIGNATURE",
+          "accounts": [
+            {
+              "path": "counter",
+              "name": "counter",
+              "publicKey": "HWJCpd8AS2nZDQzBprkiMPxd25RE25ePiVv7nhbX6doj",
+              "signer": false,
+              "writable": true,
+              "source": "pda"
+            },
+            {
+              "path": "authority",
+              "name": "authority",
+              "publicKey": "5iozfG3sFzpYx9NBSxni9vxTu1gSoCueL8phaSrQzxYX",
+              "signer": true,
+              "writable": true,
+              "source": "generated"
+            },
+            {
+              "path": "systemProgram",
+              "name": "systemProgram",
+              "publicKey": "11111111111111111111111111111111",
+              "signer": false,
+              "writable": false,
+              "source": "fixed"
+            }
+          ],
+          "args": {
+            "start": "1000000",
+            "label": "fixture-alpha"
+          },
+          "signers": [],
+          "mutation": {
+            "type": "missing-signer",
+            "account": "authority",
+            "note": "authority is declared as a signer."
+          }
+        },
+        {
+          "id": "initialize.readonly.counter",
+          "instruction": "initialize",
+          "kind": "negative",
+          "title": "Writable account forced read-only: counter",
+          "expectedOutcome": "reject",
+          "expectedError": "ACCOUNT_NOT_WRITABLE",
+          "accounts": [
+            {
+              "path": "counter",
+              "name": "counter",
+              "publicKey": "HWJCpd8AS2nZDQzBprkiMPxd25RE25ePiVv7nhbX6doj",
+              "signer": false,
+              "writable": false,
+              "source": "pda"
+            },
+            {
+              "path": "authority",
+              "name": "authority",
+              "publicKey": "5iozfG3sFzpYx9NBSxni9vxTu1gSoCueL8phaSrQzxYX",
+              "signer": true,
+              "writable": true,
+              "source": "generated"
+            },
+            {
+              "path": "systemProgram",
+              "name": "systemProgram",
+              "publicKey": "11111111111111111111111111111111",
+              "signer": false,
+              "writable": false,
+              "source": "fixed"
+            }
+          ],
+          "args": {
+            "start": "1000000",
+            "label": "fixture-alpha"
+          },
+          "signers": [
+            "authority"
+          ],
+          "mutation": {
+            "type": "readonly-account",
+            "account": "counter",
+            "note": "counter must be writable."
+          }
+        },
+        {
+          "id": "initialize.readonly.authority",
+          "instruction": "initialize",
+          "kind": "negative",
+          "title": "Writable account forced read-only: authority",
+          "expectedOutcome": "reject",
+          "expectedError": "ACCOUNT_NOT_WRITABLE",
+          "accounts": [
+            {
+              "path": "counter",
+              "name": "counter",
+              "publicKey": "HWJCpd8AS2nZDQzBprkiMPxd25RE25ePiVv7nhbX6doj",
+              "signer": false,
+              "writable": true,
+              "source": "pda"
+            },
+            {
+              "path": "authority",
+              "name": "authority",
+              "publicKey": "5iozfG3sFzpYx9NBSxni9vxTu1gSoCueL8phaSrQzxYX",
+              "signer": true,
+              "writable": false,
+              "source": "generated"
+            },
+            {
+              "path": "systemProgram",
+              "name": "systemProgram",
+              "publicKey": "11111111111111111111111111111111",
+              "signer": false,
+              "writable": false,
+              "source": "fixed"
+            }
+          ],
+          "args": {
+            "start": "1000000",
+            "label": "fixture-alpha"
+          },
+          "signers": [
+            "authority"
+          ],
+          "mutation": {
+            "type": "readonly-account",
+            "account": "authority",
+            "note": "authority must be writable."
+          }
+        },
+        {
+          "id": "initialize.invalid-pda.counter",
+          "instruction": "initialize",
+          "kind": "negative",
+          "title": "Invalid PDA derivation: counter",
+          "expectedOutcome": "reject",
+          "expectedError": "CONSTRAINT_SEEDS",
+          "accounts": [
+            {
+              "path": "counter",
+              "name": "counter",
+              "publicKey": "31zdYArzSf8BKLm8WR5q7Z22FLTHuPcQEzhgYnBtRMrA",
+              "signer": false,
+              "writable": true,
+              "source": "pda"
+            },
+            {
+              "path": "authority",
+              "name": "authority",
+              "publicKey": "5iozfG3sFzpYx9NBSxni9vxTu1gSoCueL8phaSrQzxYX",
+              "signer": true,
+              "writable": true,
+              "source": "generated"
+            },
+            {
+              "path": "systemProgram",
+              "name": "systemProgram",
+              "publicKey": "11111111111111111111111111111111",
+              "signer": false,
+              "writable": false,
+              "source": "fixed"
+            }
+          ],
+          "args": {
+            "start": "1000000",
+            "label": "fixture-alpha"
+          },
+          "signers": [
+            "authority"
+          ],
+          "mutation": {
+            "type": "invalid-pda",
+            "account": "counter",
+            "note": "Uses a deterministic non-canonical PDA."
+          }
+        },
+        {
+          "id": "initialize.boundary-args",
+          "instruction": "initialize",
+          "kind": "boundary",
+          "title": "Maximum and empty-value boundaries",
+          "expectedOutcome": "pass",
+          "accounts": [
+            {
+              "path": "counter",
+              "name": "counter",
+              "publicKey": "HWJCpd8AS2nZDQzBprkiMPxd25RE25ePiVv7nhbX6doj",
+              "signer": false,
+              "writable": true,
+              "source": "pda"
+            },
+            {
+              "path": "authority",
+              "name": "authority",
+              "publicKey": "5iozfG3sFzpYx9NBSxni9vxTu1gSoCueL8phaSrQzxYX",
+              "signer": true,
+              "writable": true,
+              "source": "generated"
+            },
+            {
+              "path": "systemProgram",
+              "name": "systemProgram",
+              "publicKey": "11111111111111111111111111111111",
+              "signer": false,
+              "writable": false,
+              "source": "fixed"
+            }
+          ],
+          "args": {
+            "start": "18446744073709551615",
+            "label": ""
+          },
+          "signers": [
+            "authority"
+          ],
+          "mutation": {
+            "type": "boundary-args",
+            "note": "Numeric maxima, empty collections, and optional nulls."
+          }
+        }
+      ]
+    },
+    {
+      "instruction": "increment",
+      "discriminator": [
+        11,
+        18,
+        104,
+        9,
+        104,
+        174,
+        59,
+        33
+      ],
+      "accountMatrix": [
+        {
+          "path": "counter",
+          "name": "counter",
+          "publicKey": "33X2a1RRMmeZe6u6ipX79VBSKhWPWGNZL4Mhiq4Vw3rU",
+          "signer": false,
+          "writable": true,
+          "source": "generated"
+        },
+        {
+          "path": "authority",
+          "name": "authority",
+          "publicKey": "9tmSk14ovY294XSoqGZuVaHpY9jxdDfiNfhJcYAV7rb2",
+          "signer": true,
+          "writable": false,
+          "source": "generated"
+        }
+      ],
+      "scenarios": [
+        {
+          "id": "increment.success",
+          "instruction": "increment",
+          "kind": "success",
+          "title": "Valid account and argument set",
+          "expectedOutcome": "pass",
+          "accounts": [
+            {
+              "path": "counter",
+              "name": "counter",
+              "publicKey": "33X2a1RRMmeZe6u6ipX79VBSKhWPWGNZL4Mhiq4Vw3rU",
+              "signer": false,
+              "writable": true,
+              "source": "generated"
+            },
+            {
+              "path": "authority",
+              "name": "authority",
+              "publicKey": "9tmSk14ovY294XSoqGZuVaHpY9jxdDfiNfhJcYAV7rb2",
+              "signer": true,
+              "writable": false,
+              "source": "generated"
+            }
+          ],
+          "args": {
+            "amount": 7
+          },
+          "signers": [
+            "authority"
+          ],
+          "mutation": {
+            "type": "none",
+            "note": "IDL constraints are preserved."
+          }
+        },
+        {
+          "id": "increment.missing-signer.authority",
+          "instruction": "increment",
+          "kind": "negative",
+          "title": "Missing signature: authority",
+          "expectedOutcome": "reject",
+          "expectedError": "MISSING_REQUIRED_SIGNATURE",
+          "accounts": [
+            {
+              "path": "counter",
+              "name": "counter",
+              "publicKey": "33X2a1RRMmeZe6u6ipX79VBSKhWPWGNZL4Mhiq4Vw3rU",
+              "signer": false,
+              "writable": true,
+              "source": "generated"
+            },
+            {
+              "path": "authority",
+              "name": "authority",
+              "publicKey": "9tmSk14ovY294XSoqGZuVaHpY9jxdDfiNfhJcYAV7rb2",
+              "signer": true,
+              "writable": false,
+              "source": "generated"
+            }
+          ],
+          "args": {
+            "amount": 7
+          },
+          "signers": [],
+          "mutation": {
+            "type": "missing-signer",
+            "account": "authority",
+            "note": "authority is declared as a signer."
+          }
+        },
+        {
+          "id": "increment.readonly.counter",
+          "instruction": "increment",
+          "kind": "negative",
+          "title": "Writable account forced read-only: counter",
+          "expectedOutcome": "reject",
+          "expectedError": "ACCOUNT_NOT_WRITABLE",
+          "accounts": [
+            {
+              "path": "counter",
+              "name": "counter",
+              "publicKey": "33X2a1RRMmeZe6u6ipX79VBSKhWPWGNZL4Mhiq4Vw3rU",
+              "signer": false,
+              "writable": false,
+              "source": "generated"
+            },
+            {
+              "path": "authority",
+              "name": "authority",
+              "publicKey": "9tmSk14ovY294XSoqGZuVaHpY9jxdDfiNfhJcYAV7rb2",
+              "signer": true,
+              "writable": false,
+              "source": "generated"
+            }
+          ],
+          "args": {
+            "amount": 7
+          },
+          "signers": [
+            "authority"
+          ],
+          "mutation": {
+            "type": "readonly-account",
+            "account": "counter",
+            "note": "counter must be writable."
+          }
+        },
+        {
+          "id": "increment.boundary-args",
+          "instruction": "increment",
+          "kind": "boundary",
+          "title": "Maximum and empty-value boundaries",
+          "expectedOutcome": "pass",
+          "accounts": [
+            {
+              "path": "counter",
+              "name": "counter",
+              "publicKey": "33X2a1RRMmeZe6u6ipX79VBSKhWPWGNZL4Mhiq4Vw3rU",
+              "signer": false,
+              "writable": true,
+              "source": "generated"
+            },
+            {
+              "path": "authority",
+              "name": "authority",
+              "publicKey": "9tmSk14ovY294XSoqGZuVaHpY9jxdDfiNfhJcYAV7rb2",
+              "signer": true,
+              "writable": false,
+              "source": "generated"
+            }
+          ],
+          "args": {
+            "amount": 65535
+          },
+          "signers": [
+            "authority"
+          ],
+          "mutation": {
+            "type": "boundary-args",
+            "note": "Numeric maxima, empty collections, and optional nulls."
+          }
+        }
+      ]
+    },
+    {
+      "instruction": "setConfig",
+      "discriminator": [
+        108,
+        158,
+        154,
+        175,
+        212,
+        98,
+        52,
+        66
+      ],
+      "accountMatrix": [
+        {
+          "path": "counter",
+          "name": "counter",
+          "publicKey": "CWiPhXePexsu2ZvzL4KKSAJhfxRfMUKkKhkUn31W37eu",
+          "signer": false,
+          "writable": true,
+          "source": "generated"
+        },
+        {
+          "path": "authority",
+          "name": "authority",
+          "publicKey": "DfzuNZQ5ZieNYezCww8TmGwtSd6MoiDWTowryB7GXF8i",
+          "signer": true,
+          "writable": false,
+          "source": "generated"
+        }
+      ],
+      "scenarios": [
+        {
+          "id": "setConfig.success",
+          "instruction": "setConfig",
+          "kind": "success",
+          "title": "Valid account and argument set",
+          "expectedOutcome": "pass",
+          "accounts": [
+            {
+              "path": "counter",
+              "name": "counter",
+              "publicKey": "CWiPhXePexsu2ZvzL4KKSAJhfxRfMUKkKhkUn31W37eu",
+              "signer": false,
+              "writable": true,
+              "source": "generated"
+            },
+            {
+              "path": "authority",
+              "name": "authority",
+              "publicKey": "DfzuNZQ5ZieNYezCww8TmGwtSd6MoiDWTowryB7GXF8i",
+              "signer": true,
+              "writable": false,
+              "source": "generated"
+            }
+          ],
+          "args": {
+            "config": {
+              "ceiling": "1000000",
+              "enabled": true,
+              "tags": [
+                "fixture-alpha"
+              ]
+            },
+            "delegate": "B9bEqcMtPmNNMQyxW69qTqEfuyZdoPw5yXjcNNhJsfS3"
+          },
+          "signers": [
+            "authority"
+          ],
+          "mutation": {
+            "type": "none",
+            "note": "IDL constraints are preserved."
+          }
+        },
+        {
+          "id": "setConfig.missing-signer.authority",
+          "instruction": "setConfig",
+          "kind": "negative",
+          "title": "Missing signature: authority",
+          "expectedOutcome": "reject",
+          "expectedError": "MISSING_REQUIRED_SIGNATURE",
+          "accounts": [
+            {
+              "path": "counter",
+              "name": "counter",
+              "publicKey": "CWiPhXePexsu2ZvzL4KKSAJhfxRfMUKkKhkUn31W37eu",
+              "signer": false,
+              "writable": true,
+              "source": "generated"
+            },
+            {
+              "path": "authority",
+              "name": "authority",
+              "publicKey": "DfzuNZQ5ZieNYezCww8TmGwtSd6MoiDWTowryB7GXF8i",
+              "signer": true,
+              "writable": false,
+              "source": "generated"
+            }
+          ],
+          "args": {
+            "config": {
+              "ceiling": "1000000",
+              "enabled": true,
+              "tags": [
+                "fixture-alpha"
+              ]
+            },
+            "delegate": "B9bEqcMtPmNNMQyxW69qTqEfuyZdoPw5yXjcNNhJsfS3"
+          },
+          "signers": [],
+          "mutation": {
+            "type": "missing-signer",
+            "account": "authority",
+            "note": "authority is declared as a signer."
+          }
+        },
+        {
+          "id": "setConfig.readonly.counter",
+          "instruction": "setConfig",
+          "kind": "negative",
+          "title": "Writable account forced read-only: counter",
+          "expectedOutcome": "reject",
+          "expectedError": "ACCOUNT_NOT_WRITABLE",
+          "accounts": [
+            {
+              "path": "counter",
+              "name": "counter",
+              "publicKey": "CWiPhXePexsu2ZvzL4KKSAJhfxRfMUKkKhkUn31W37eu",
+              "signer": false,
+              "writable": false,
+              "source": "generated"
+            },
+            {
+              "path": "authority",
+              "name": "authority",
+              "publicKey": "DfzuNZQ5ZieNYezCww8TmGwtSd6MoiDWTowryB7GXF8i",
+              "signer": true,
+              "writable": false,
+              "source": "generated"
+            }
+          ],
+          "args": {
+            "config": {
+              "ceiling": "1000000",
+              "enabled": true,
+              "tags": [
+                "fixture-alpha"
+              ]
+            },
+            "delegate": "B9bEqcMtPmNNMQyxW69qTqEfuyZdoPw5yXjcNNhJsfS3"
+          },
+          "signers": [
+            "authority"
+          ],
+          "mutation": {
+            "type": "readonly-account",
+            "account": "counter",
+            "note": "counter must be writable."
+          }
+        },
+        {
+          "id": "setConfig.boundary-args",
+          "instruction": "setConfig",
+          "kind": "boundary",
+          "title": "Maximum and empty-value boundaries",
+          "expectedOutcome": "pass",
+          "accounts": [
+            {
+              "path": "counter",
+              "name": "counter",
+              "publicKey": "CWiPhXePexsu2ZvzL4KKSAJhfxRfMUKkKhkUn31W37eu",
+              "signer": false,
+              "writable": true,
+              "source": "generated"
+            },
+            {
+              "path": "authority",
+              "name": "authority",
+              "publicKey": "DfzuNZQ5ZieNYezCww8TmGwtSd6MoiDWTowryB7GXF8i",
+              "signer": true,
+              "writable": false,
+              "source": "generated"
+            }
+          ],
+          "args": {
+            "config": {
+              "ceiling": "18446744073709551615",
+              "enabled": false,
+              "tags": []
+            },
+            "delegate": null
+          },
+          "signers": [
+            "authority"
+          ],
+          "mutation": {
+            "type": "boundary-args",
+            "note": "Numeric maxima, empty collections, and optional nulls."
+          }
+        }
+      ]
+    }
+  ]
+}
