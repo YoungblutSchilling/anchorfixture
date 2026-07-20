@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://anchorfixture.dev/schema/v1.json",
+  "title": "AnchorFixture v1 fixture pack",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "seed", "idlFingerprint", "program", "summary", "instructions"],
+  "properties": {
+    "schema": { "const": "anchorfixture/v1" },
+    "seed": { "type": "string", "minLength": 1 },
+    "idlFingerprint": { "type": "string", "pattern": "^fnv1a32:[0-9a-f]{8}$" },
+    "program": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "address", "version"],
+      "properties": {
+        "name": { "type": "string" },
+        "address": { "type": "string", "minLength": 32 },
+        "version": { "type": "string" }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["instructions", "scenarios", "negativeScenarios", "signerAccounts"],
+      "properties": {
+        "instructions": { "type": "integer", "minimum": 1 },
+        "scenarios": { "type": "integer", "minimum": 1 },
+        "negativeScenarios": { "type": "integer", "minimum": 0 },
+        "signerAccounts": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "instructions": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/instruction" }
+    }
+  },
+  "$defs": {
+    "account": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "name", "publicKey", "signer", "writable", "source"],
+      "properties": {
+        "path": { "type": "string" },
+        "name": { "type": "string" },
+        "publicKey": { "type": "string", "minLength": 32 },
+        "signer": { "type": "boolean" },
+        "writable": { "type": "boolean" },
+        "source": { "enum": ["fixed", "generated", "pda"] }
+      }
+    },
+    "mutation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "note"],
+      "properties": {
+        "type": { "enum": ["none", "missing-signer", "readonly-account", "invalid-pda", "boundary-args"] },
+        "account": { "type": "string" },
+        "note": { "type": "string" }
+      }
+    },
+    "scenario": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "instruction", "kind", "title", "expectedOutcome", "accounts", "args", "signers", "mutation"],
+      "properties": {
+        "id": { "type": "string" },
+        "instruction": { "type": "string" },
+        "kind": { "enum": ["success", "negative", "boundary"] },
+        "title": { "type": "string" },
+        "expectedOutcome": { "enum": ["pass", "reject"] },
+        "expectedError": { "type": "string" },
+        "accounts": { "type": "array", "items": { "$ref": "#/$defs/account" } },
+        "args": { "type": "object" },
+        "signers": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+        "mutation": { "$ref": "#/$defs/mutation" }
+      }
+    },
+    "instruction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["instruction", "accountMatrix", "scenarios"],
+      "properties": {
+        "instruction": { "type": "string" },
+        "discriminator": { "type": "array", "items": { "type": "integer", "minimum": 0, "maximum": 255 } },
+        "accountMatrix": { "type": "array", "items": { "$ref": "#/$defs/account" } },
+        "scenarios": { "type": "array", "minItems": 2, "items": { "$ref": "#/$defs/scenario" } }
+      }
+    }
+  }
+}
